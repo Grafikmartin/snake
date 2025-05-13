@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.font = "20px Arial";
             ctx.fillStyle = getCssVariable("--start-text-color");
             ctx.textAlign = "center";
-            ctx.fillText("Wischen zum Starten", canvas.width / 2, canvas.height / 2);
+            ctx.fillText("Swipe to Start", canvas.width / 2, canvas.height / 2);
         }
     }
     

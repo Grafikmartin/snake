@@ -11,9 +11,9 @@
     --food-color: rgb(255, 38, 0); /* From script.js */
     --game-over-bg: rgba(0, 0, 0, 0.75); /* From script.js */
     --game-over-text: white; /* From script.js */
-    --pause-overlay-bg: rgba(0, 0, 0, 0.5); /* From script.js */
+    --pause-overlay-bg: rgba(255, 255, 255, 0.5); /* From script.js */
     --pause-overlay-text: white; /* From script.js */
-    --start-text-color: black; /* From script.js */
+    --start-text-color: rgb(255, 255, 255); /* From script.js */
 }
 
 body {
