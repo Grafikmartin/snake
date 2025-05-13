@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillStyle = "#eee";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "green";
+        ctx.fillStyle = "#27b0ff";
         snake.forEach(segment => {
             ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
         });
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = "30px Arial";
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#000000";
         ctx.textAlign = "center";
         ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 20);
         ctx.font = "20px Arial";
