@@ -1,0 +1,69 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    touch-action: none; /* Disable default touch actions like pinch-zoom */
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#gameCanvas {
+    border: 1px solid #000;
+    background-color: #eee;
+    max-width: 90vw; /* Ensure canvas fits within viewport width */
+    max-height: 70vh; /* Ensure canvas fits within viewport height */
+}
+
+#controls {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+#controls button {
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#controls button .material-icons {
+    font-size: 20px;
+}
+
+#score-board, #highscore-board {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* Make buttons a bit larger for touch screens */
+@media (max-width: 600px) {
+    #controls button {
+        padding: 10px 15px;
+        font-size: 18px;
+    }
+    #controls button .material-icons {
+        font-size: 24px;
+    }
+    #score-board, #highscore-board {
+        font-size: 16px;
+    }
+}

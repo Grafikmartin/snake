@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Snake Spiel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="controls">
+            <button id="fullscreen-btn"><i class="material-icons">fullscreen</i></button>
+            <button id="exit-fullscreen-btn" style="display:none;"><i class="material-icons">fullscreen_exit</i></button>
+            <button id="pause-btn"><i class="material-icons">pause</i></button>
+            <button id="resume-btn" style="display:none;"><i class="material-icons">play_arrow</i></button>
+        </div>
+        <div id="score-board">
+            Score: <span id="current-score">0</span>
+        </div>
+        <div id="highscore-board">
+            Highscore: <span id="highscore">0</span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
