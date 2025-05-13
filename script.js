@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let score = 0;
     let highscore = localStorage.getItem("snakeHighscore") || 0;
     let gameInterval;
-    let gameSpeed = 150;
+    let gameSpeed = 200;
     let isPaused = false;
     let isGameOver = false;
 
