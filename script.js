@@ -14,32 +14,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const pauseBtn = document.getElementById("pause-btn");
     const resumeBtn = document.getElementById("resume-btn");
 
-    let gridSize = 20; // Größe jeder Zelle im Raster
-    let tileCountX, tileCountY; // Anzahl der Zellen in X- und Y-Richtung
+    let gridSize = 20; 
+    let tileCountX, tileCountY;
 
-    let snake = [{ x: 10, y: 10 }]; // Startposition der Schlange
-    let food = { x: 15, y: 15 }; // Startposition des Essens
-    let velocity = { x: 0, y: 0 }; // Bewegungsrichtung der Schlange
+    let snake = [{ x: 10, y: 10 }];
+    let food = { x: 15, y: 15 };
+    let velocity = { x: 0, y: 0 };
     let score = 0;
     let highscore = localStorage.getItem("snakeHighscore") || 0;
     let gameInterval;
-    let gameSpeed = 150; // Millisekunden pro Frame (langsamer = einfacher)
+    let gameSpeed = 150;
     let isPaused = false;
     let isGameOver = false;
 
-    // Touch control variables
     let touchStartX = 0;
     let touchStartY = 0;
     let touchEndX = 0;
     let touchEndY = 0;
-    const minSwipeDistance = 30; // Mindestdistanz für einen Swipe
+    const minSwipeDistance = 30;
 
     currentScoreEl.textContent = score;
     highscoreEl.textContent = highscore;
 
+    // Helper function to get CSS variables
+    function getCssVariable(variableName) {
+        return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
+    }
+
     function resizeCanvas() {
-        const containerWidth = gameContainer.clientWidth - 40; // Berücksichtige Padding
-        const containerHeight = window.innerHeight * 0.55; // Nutze 55% der Viewport Höhe für Canvas
+        const containerWidth = gameContainer.clientWidth - 40;
+        const containerHeight = window.innerHeight * 0.55;
 
         tileCountX = Math.floor(containerWidth / gridSize);
         tileCountY = Math.floor(containerHeight / gridSize);
@@ -71,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function initGame() {
         snake = [{ x: Math.floor(tileCountX / 2), y: Math.floor(tileCountY / 2) }];
-        velocity = { x: 0, y: 0 }; // Wichtig: Velocity zurücksetzen, damit das Spiel nicht sofort startet
+        velocity = { x: 0, y: 0 };
         score = 0;
         currentScoreEl.textContent = score;
         isGameOver = false;
@@ -80,12 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
         pauseBtn.style.display = "inline-flex";
         placeFood();
         if (gameInterval) clearInterval(gameInterval);
-        // Spiel startet erst durch Nutzereingabe (Tastatur oder Swipe)
-        // gameInterval = setInterval(gameLoop, gameSpeed); 
         drawGame();
-        if (velocity.x === 0 && velocity.y === 0) { // Nur wenn das Spiel noch nicht durch eine Eingabe gestartet wurde
+        if (velocity.x === 0 && velocity.y === 0) {
             ctx.font = "20px Arial";
-            ctx.fillStyle = "black";
+            ctx.fillStyle = getCssVariable("--start-text-color");
             ctx.textAlign = "center";
             ctx.fillText("Wischen zum Starten", canvas.width / 2, canvas.height / 2);
         }
@@ -109,26 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function drawGame() {
-        if (isPaused || isGameOver && !gameInterval) return; // Verhindere Zeichnen wenn pausiert oder Game Over und Intervall gestoppt
+        if (isPaused || (isGameOver && !gameInterval)) return;
 
-        ctx.fillStyle = "#eee";
+        ctx.fillStyle = getCssVariable("--canvas-bg-color");
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = "#27b0ff";
+        ctx.fillStyle = getCssVariable("--snake-color");
         snake.forEach(segment => {
             ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
         });
 
-        ctx.fillStyle = "red";
+        ctx.fillStyle = getCssVariable("--food-color");
         ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 1, gridSize - 1);
     }
     
     function drawGameOver() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
+        ctx.fillStyle = getCssVariable("--game-over-bg");
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = "30px Arial";
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = getCssVariable("--game-over-text");
         ctx.textAlign = "center";
         ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 20);
         ctx.font = "20px Arial";
@@ -138,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function updateGame() {
         if (isPaused || isGameOver) return;
-        if (velocity.x === 0 && velocity.y === 0) return; // Spiel nicht updaten, wenn keine Bewegung
+        if (velocity.x === 0 && velocity.y === 0) return;
 
         const head = { x: snake[0].x + velocity.x, y: snake[0].y + velocity.y };
 
@@ -215,9 +217,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Touch Controls
     canvas.addEventListener("touchstart", e => {
-        e.preventDefault(); // Verhindert Scrollen etc.
+        e.preventDefault();
         if (isGameOver) return;
         touchStartX = e.changedTouches[0].screenX;
         touchStartY = e.changedTouches[0].screenY;
@@ -226,7 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.addEventListener("touchend", e => {
         e.preventDefault();
         if (isGameOver) {
-             // Erlaube Neustart durch Tap auch bei Game Over
             initGame();
             return;
         }
@@ -240,22 +240,22 @@ document.addEventListener("DOMContentLoaded", () => {
         const deltaY = touchEndY - touchStartY;
         let newVelocitySet = false;
 
-        if (Math.abs(deltaX) > Math.abs(deltaY)) { // Horizontaler Swipe
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
             if (Math.abs(deltaX) > minSwipeDistance) {
-                if (deltaX > 0 && velocity.x === 0) { // Rechts
+                if (deltaX > 0 && velocity.x === 0) {
                     velocity = { x: 1, y: 0 };
                     newVelocitySet = true;
-                } else if (deltaX < 0 && velocity.x === 0) { // Links
+                } else if (deltaX < 0 && velocity.x === 0) {
                     velocity = { x: -1, y: 0 };
                     newVelocitySet = true;
                 }
             }
-        } else { // Vertikaler Swipe
+        } else {
             if (Math.abs(deltaY) > minSwipeDistance) {
-                if (deltaY > 0 && velocity.y === 0) { // Runter
+                if (deltaY > 0 && velocity.y === 0) {
                     velocity = { x: 0, y: 1 };
                     newVelocitySet = true;
-                } else if (deltaY < 0 && velocity.y === 0) { // Hoch
+                } else if (deltaY < 0 && velocity.y === 0) {
                     velocity = { x: 0, y: -1 };
                     newVelocitySet = true;
                 }
@@ -294,25 +294,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     function pauseGame() {
-        if (!isGameOver && gameInterval) { // Nur pausieren, wenn das Spiel läuft
+        if (!isGameOver && gameInterval) {
             isPaused = true;
             clearInterval(gameInterval);
             gameInterval = null;
             pauseBtn.style.display = "none";
             resumeBtn.style.display = "inline-flex";
-            ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+            ctx.fillStyle = getCssVariable("--pause-overlay-bg");
             ctx.fillRect(0,0, canvas.width, canvas.height);
             ctx.font = "30px Arial";
-            ctx.fillStyle = "white";
+            ctx.fillStyle = getCssVariable("--pause-overlay-text");
             ctx.textAlign = "center";
             ctx.fillText("Pausiert", canvas.width / 2, canvas.height / 2);
         }
     }
 
     function resumeGame() {
-        if (!isGameOver && isPaused) { // Nur fortsetzen, wenn pausiert
+        if (!isGameOver && isPaused) {
             isPaused = false;
-            startGameLoop(); // Starte den Loop wieder
+            startGameLoop();
             resumeBtn.style.display = "none";
             pauseBtn.style.display = "inline-flex";
             gameLoop(); 
@@ -330,11 +330,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    pauseBtn.addEventListener("click", togglePause); // Geändert zu togglePause
-    resumeBtn.addEventListener("click", togglePause); // Geändert zu togglePause
+    pauseBtn.addEventListener("click", togglePause);
+    resumeBtn.addEventListener("click", togglePause);
 
     resizeCanvas();
-    initGame(); // Ruft initGame auf, das die Startnachricht anzeigt
+    initGame();
 
 });
 

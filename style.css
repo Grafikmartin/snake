@@ -4,7 +4,7 @@
     --container-shadow-color: rgba(0,0,0,0.1);
     --canvas-border-color: #000;
     --canvas-bg-color: #000000;
-    --button-bg-color: #27b0ff;
+    --button-bg-color: #000000;
     --button-text-color: white;
     --default-text-color: #333; /* Adding a default text color */
     --snake-color: #27b0ff; /* From script.js */
