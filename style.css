@@ -1,5 +1,5 @@
 :root {
-    /* Farbvariablen – können leicht global angepasst werden */
+    /* Farbvariablen – können leicht global angepasst werden */
     --body-bg-color:       #000000;
     --container-bg-color:  #27b0ff;
     --container-shadow:    rgba(0,0,0,0.1);
@@ -36,7 +36,7 @@ body {
     color:            var(--text-default);
     font-family:      Arial, sans-serif;
 
-    touch-action:     none;    /* verhindert Pinch‑Zoom etc. */
+    touch-action:     none;    /* verhindert Pinch-Zoom etc. */
 }
 
 #game-container {
@@ -45,11 +45,11 @@ body {
     align-items:      center;
 
     background:       var(--container-bg-color);
-    padding:          20px;
+    padding:          40px 20px 20px;   /* oben etwas dicker */
     border-radius:    10px;
     box-shadow:       0 0 10px var(--container-shadow);
 
-    position:         relative;  /* Referenz für Score‑Overlay */
+    position:         relative;  /* Referenz für Score-Overlay */
 }
 
 #gameCanvas {
@@ -81,7 +81,7 @@ body {
 #highscore-board { right: 8px; }
 
 /* -------------------------------------------------- */
-/*  Steuer‑Buttons (Pause, Fullscreen, …)             */
+/*  Steuer-Buttons (Pause, Fullscreen, …)             */
 /* -------------------------------------------------- */
 #controls {
     margin-top:       10px;
@@ -109,11 +109,11 @@ body {
 }
 
 /* -------------------------------------------------- */
-/*  Retro D‑Pad (Touch‑Steuerung)                     */
+/*  Retro D-Pad (Touch-Steuerung)                     */
 /* -------------------------------------------------- */
 .touch-only { display: none; }
 @media (pointer: coarse) {
-  .touch-only { display: grid; } /* nur auf Touch‑Geräten */
+  .touch-only { display: grid; } /* nur auf Touch-Geräten */
 }
 
 #touch-controls {
@@ -132,7 +132,7 @@ body {
 #right-btn { grid-column: 3; grid-row: 2; }
 #down-btn  { grid-column: 2; grid-row: 3; }
 
-/* Optik der D‑Pad‑Buttons */
+/* Optik der D-Pad-Buttons */
 #touch-controls button {
     width:            100%;
     height:           100%;
