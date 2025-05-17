@@ -1,4 +1,7 @@
 // script.js - Snake Spiel Logik
+function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Snake Spiel initialisiert.");
@@ -60,7 +63,8 @@ function attemptTurn({ dx, dy, axis }) {
     let score = 0;
     let highscore = localStorage.getItem("snakeHighscore") || 0;
     let gameInterval;
-    let gameSpeed = 200;
+    let gameSpeed = isTouchDevice() ? 300 : 200;
+
     let isPaused = false;
     let isGameOver = false;
 
