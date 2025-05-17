@@ -87,4 +87,45 @@ body {
         font-size: 16px;
     }
 }
+/* ----------  D-Pad / Touch-Steuerung  ---------- */
+
+/* standardmäßig ausblenden – sieht man nur auf Geräten mit grober Eingabe (Touch)       */
+.touch-only          { display: none; }
+@media (pointer: coarse) {
+  .touch-only        { display: grid; }             /* sichtbar auf Smartphones & Tablets */
+}
+
+/* 3 × 3-Raster – mittleres Feld bleibt leer, ergibt eine Kreuz-Anordnung                */
+#touch-controls {
+  grid-template-columns: repeat(3, 60px);
+  grid-template-rows:    repeat(3, 60px);
+  gap: 10px;
+  margin-top: 20px;
+  user-select: none;
+  touch-action: none;                               /* verhindert Scrollen beim Wischen   */
+}
+
+/* Positionierung der einzelnen Buttons im Raster                                        */
+#up-btn    { grid-column: 2; grid-row: 1; }
+#left-btn  { grid-column: 1; grid-row: 2; }
+#right-btn { grid-column: 3; grid-row: 2; }
+#down-btn  { grid-column: 2; grid-row: 3; }
+
+/* Optik der Buttons (kannst du natürlich noch anpassen)                                 */
+#touch-controls button {
+  width: 100%;
+  height: 100%;
+  font-size: 28px;
+  border: none;
+  border-radius: 50%;
+  background: var(--button-bg-color);
+  color: var(--button-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,.4);
+}
+#touch-controls button:active {
+  transform: scale(.9);
+}
 

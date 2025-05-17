@@ -13,7 +13,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const exitFullscreenBtn = document.getElementById("exit-fullscreen-btn");
     const pauseBtn = document.getElementById("pause-btn");
     const resumeBtn = document.getElementById("resume-btn");
+    const dirButtons = [
+  { el: document.getElementById("up-btn"),    dx:  0, dy: -1, axis: "y" },
+  { el: document.getElementById("down-btn"),  dx:  0, dy:  1, axis: "y" },
+  { el: document.getElementById("left-btn"),  dx: -1, dy:  0, axis: "x" },
+  { el: document.getElementById("right-btn"), dx:  1, dy:  0, axis: "x" },
+];
 
+dirButtons.forEach(btn => {
+  /* Mausklick */
+  btn.el.addEventListener("click", () => attemptTurn(btn));
+  /* Touch-Start – passive:false, damit preventDefault funktioniert und kein Scrollen passiert */
+  btn.el.addEventListener(
+    "touchstart",
+    e => { e.preventDefault(); attemptTurn(btn); },
+    { passive: false }
+  );
+});
+
+function attemptTurn({ dx, dy, axis }) {
+  /* Gegen Geradeaus wenden wir uns nur, wenn wir nicht schon auf derselben Achse unterwegs sind */
+  if ((axis === "x" && velocity.x === 0) || (axis === "y" && velocity.y === 0)) {
+    velocity = { x: dx, y: dy };
+    /* falls das Spiel noch nicht läuft → Loop starten */
+    if (!gameInterval && !isGameOver) {
+      isPaused = false;
+      startGameLoop();
+    }
+  }
+}
     let gridSize = 20; 
     let tileCountX, tileCountY;
 
