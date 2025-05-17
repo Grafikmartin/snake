@@ -58,7 +58,7 @@ body {
     background:       var(--canvas-bg-color, #000000);
 
     max-width:        90vw;   /* passt sich Viewport-Breite an */
-    max-height:       70vh;   /* nimmt höchstens 70% der Höhe */
+    max-height:       65vh;   /* nimmt höchstens 70% der Höhe */
 }
 
 /* -------------------------------------------------- */
