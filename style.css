@@ -5,7 +5,7 @@
     --container-shadow:    rgba(0,0,0,0.1);
 
     --canvas-border:       #000;
-    --canvas-bg-color:     #000000;    /* Name korrigiert, entspricht JS-Erwartung */
+    --canvas-bg-color:     #000000;    /* von JS & CSS genutzt */
 
     --button-bg:           #000000;
     --button-text:         #ffffff;
@@ -45,7 +45,7 @@ body {
     align-items:      center;
 
     background:       var(--container-bg-color);
-    padding:          40px 20px 20px;   /* oben etwas dicker */
+    padding:          40px 20px 20px;   /* oberer Rand */
     border-radius:    10px;
     box-shadow:       0 0 10px var(--container-shadow);
 
@@ -54,7 +54,8 @@ body {
 
 #gameCanvas {
     border:           1px solid var(--canvas-border);
-    background:       var(--canvas-bg-color); /* korrigierter Variablenname */
+    /* Fallback‑Wert nach dem Komma – falls Variable mal leer ist (z. B. auf manchen Phones) */
+    background:       var(--canvas-bg-color, #000000);
 
     max-width:        90vw;   /* passt sich Viewport-Breite an */
     max-height:       70vh;   /* nimmt höchstens 70% der Höhe */
