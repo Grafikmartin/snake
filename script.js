@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const fullscreenBtn = document.getElementById("fullscreen-btn");
     const exitFullscreenBtn = document.getElementById("exit-fullscreen-btn");
     const pauseBtn = document.getElementById("pause-btn");
+    const restartBtn = document.getElementById("restart-btn");
     const resumeBtn = document.getElementById("resume-btn");
+    
     const dirButtons = [
   { el: document.getElementById("up-btn"),    dx:  0, dy: -1, axis: "y" },
   { el: document.getElementById("down-btn"),  dx:  0, dy:  1, axis: "y" },
@@ -31,6 +33,13 @@ dirButtons.forEach(btn => {
   );
 });
 
+restartBtn.addEventListener("click", () => {
+    if (gameInterval) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+    initGame(); // Spiel zurücksetzen
+});
 function attemptTurn({ dx, dy, axis }) {
   /* Gegen Geradeaus wenden wir uns nur, wenn wir nicht schon auf derselben Achse unterwegs sind */
   if ((axis === "x" && velocity.x === 0) || (axis === "y" && velocity.y === 0)) {
@@ -117,7 +126,7 @@ function attemptTurn({ dx, dy, axis }) {
             ctx.font = "20px Arial";
             ctx.fillStyle = getCssVariable("--start-text-color");
             ctx.textAlign = "center";
-            ctx.fillText("Swipe to Start", canvas.width / 2, canvas.height / 2);
+            ctx.fillText("Click to Start", canvas.width / 2, canvas.height / 2);
         }
     }
     
