@@ -5,7 +5,7 @@
     --container-shadow:    rgba(0,0,0,0.1);
 
     --canvas-border:       #000;
-    --canvas-bg:           #000000;
+    --canvas-bg-color:     #000000;    /* Name korrigiert, entspricht JS-Erwartung */
 
     --button-bg:           #000000;
     --button-text:         #ffffff;
@@ -54,7 +54,7 @@ body {
 
 #gameCanvas {
     border:           1px solid var(--canvas-border);
-    background:       var(--canvas-bg);
+    background:       var(--canvas-bg-color); /* korrigierter Variablenname */
 
     max-width:        90vw;   /* passt sich Viewport-Breite an */
     max-height:       70vh;   /* nimmt höchstens 70% der Höhe */
