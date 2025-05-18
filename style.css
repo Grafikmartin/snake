@@ -1,18 +1,12 @@
 :root {
-    /* Farbvariablen – können leicht global angepasst werden */
     --body-bg-color:       #000000;
     --container-bg-color:  #27b0ff;
     --container-shadow:    rgba(0,0,0,0.1);
-
     --canvas-border:       #000;
-    --canvas-bg-color:     #000000;    /* von JS & CSS genutzt */
-
+    --canvas-bg-color:     #000000;
     --button-bg:           #000000;
     --button-text:         #ffffff;
-
     --text-default:        #333;
-
-    /* Werte, die das JS-Skript ebenfalls nutzt */
     --snake-color:         #27b0ff;
     --food-color:          #ff2600;
     --game-over-bg:        rgba(0,0,0,0.75);
@@ -22,68 +16,52 @@
     --start-text-color:    #ffffff;
 }
 
-/* -------------------------------------------------- */
-/*  Grundlayout                                       */
-/* -------------------------------------------------- */
 body {
     display:          flex;
     justify-content:  center;
     align-items:      center;
     height:           100vh;
     margin:           0;
-
     background:       var(--body-bg-color);
     color:            var(--text-default);
     font-family:      Arial, sans-serif;
-
-    touch-action:     none;    /* verhindert Pinch-Zoom etc. */
+    touch-action:     none;
 }
 
 #game-container {
     display:          flex;
     flex-direction:   column;
     align-items:      center;
-
     background:       var(--container-bg-color);
-    padding:          40px 20px 20px;   /* oberer Rand */
+    padding:          40px 20px 20px;
     border-radius:    10px;
     box-shadow:       0 0 10px var(--container-shadow);
-
-    position:         relative;  /* Referenz für Score-Overlay */
+    position:         relative;
 }
 
 #gameCanvas {
     border:           1px solid var(--canvas-border);
-    /* Fallback‑Wert nach dem Komma – falls Variable mal leer ist (z. B. auf manchen Phones) */
     background:       var(--canvas-bg-color, #000000);
-
-    max-width:        90vw;   /* passt sich Viewport-Breite an */
-    max-height:       65vh;   /* nimmt höchstens 70% der Höhe */
+    max-width:        90vw;
+    max-height:       65vh;
 }
 
-/* -------------------------------------------------- */
-/*  HUD: Score & Highscore                            */
-/* -------------------------------------------------- */
 #score-board,
 #highscore-board {
     position:         absolute;
     top:              8px;
-
     font-size:        clamp(14px, 2.5vw, 20px);
     background:       rgba(0,0,0,0.35);
     color:            #fff;
     padding:          4px 10px;
     border-radius:    6px;
-
-    pointer-events:   none;   /* blockiert keine Touches */
+    pointer-events:   none;
     user-select:      none;
 }
+
 #score-board     { left:  8px; }
 #highscore-board { right: 8px; }
 
-/* -------------------------------------------------- */
-/*  Steuer-Buttons (Pause, Fullscreen, …)             */
-/* -------------------------------------------------- */
 #controls {
     margin-top:       10px;
     display:          flex;
@@ -93,28 +71,24 @@ body {
 #controls button {
     padding:          8px 12px;
     font-size:        16px;
-
     cursor:           pointer;
     border:           none;
     border-radius:    5px;
-
     background:       var(--button-bg);
     color:            var(--button-text);
-
     display:          flex;
     align-items:      center;
     justify-content:  center;
 }
+
 #controls button .material-icons {
     font-size:        20px;
 }
 
-/* -------------------------------------------------- */
-/*  Retro D-Pad (Touch-Steuerung)                     */
-/* -------------------------------------------------- */
 .touch-only { display: none; }
+
 @media (pointer: coarse) {
-  .touch-only { display: grid; } /* nur auf Touch-Geräten */
+  .touch-only { display: grid; }
 }
 
 #touch-controls {
@@ -122,42 +96,34 @@ body {
     grid-template-rows:    repeat(3, 60px);
     gap:                   10px;
     margin-top:            20px;
-
     user-select:           none;
-    touch-action:          none; /* verhindert Scroll/Bounce */
+    touch-action:          none;
 }
 
-/* Position im Raster */
 #up-btn    { grid-column: 2; grid-row: 1; }
 #left-btn  { grid-column: 1; grid-row: 2; }
 #right-btn { grid-column: 3; grid-row: 2; }
 #down-btn  { grid-column: 2; grid-row: 3; }
 
-/* Optik der D-Pad-Buttons */
 #touch-controls button {
     width:            100%;
     height:           100%;
-
     font-size:        28px;
     border:           none;
     border-radius:    50%;
-
     background:       var(--button-bg);
     color:            var(--button-text);
-
     display:          flex;
     align-items:      center;
     justify-content:  center;
     box-shadow:       0 2px 4px rgba(0,0,0,.4);
     transition:       transform .05s ease-out;
 }
+
 #touch-controls button:active {
     transform:        scale(.9);
 }
 
-/* -------------------------------------------------- */
-/*  Responsive Anpassungen                            */
-/* -------------------------------------------------- */
 @media (max-width: 600px) {
     #controls button {
         padding:      10px 15px;
@@ -167,6 +133,7 @@ body {
         font-size:    24px;
     }
 }
+
 @media (max-width: 400px) {
   #gameCanvas {
     max-height: 60vh;

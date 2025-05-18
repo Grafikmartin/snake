@@ -1,11 +1,8 @@
-// script.js - Snake Spiel Logik
 function isTouchDevice() {
     return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Snake Spiel initialisiert.");
-
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
     const gameContainer = document.getElementById("game-container");
@@ -19,41 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const resumeBtn = document.getElementById("resume-btn");
     
     const dirButtons = [
-  { el: document.getElementById("up-btn"),    dx:  0, dy: -1, axis: "y" },
-  { el: document.getElementById("down-btn"),  dx:  0, dy:  1, axis: "y" },
-  { el: document.getElementById("left-btn"),  dx: -1, dy:  0, axis: "x" },
-  { el: document.getElementById("right-btn"), dx:  1, dy:  0, axis: "x" },
-];
+        { el: document.getElementById("up-btn"),    dx:  0, dy: -1, axis: "y" },
+        { el: document.getElementById("down-btn"),  dx:  0, dy:  1, axis: "y" },
+        { el: document.getElementById("left-btn"),  dx: -1, dy:  0, axis: "x" },
+        { el: document.getElementById("right-btn"), dx:  1, dy:  0, axis: "x" },
+    ];
 
-dirButtons.forEach(btn => {
-  /* Mausklick */
-  btn.el.addEventListener("click", () => attemptTurn(btn));
-  /* Touch-Start – passive:false, damit preventDefault funktioniert und kein Scrollen passiert */
-  btn.el.addEventListener(
-    "touchstart",
-    e => { e.preventDefault(); attemptTurn(btn); },
-    { passive: false }
-  );
-});
+    dirButtons.forEach(btn => {
+        btn.el.addEventListener("click", () => attemptTurn(btn));
+        btn.el.addEventListener("touchstart", e => { e.preventDefault(); attemptTurn(btn); }, { passive: false });
+    });
 
-restartBtn.addEventListener("click", () => {
-    if (gameInterval) {
-        clearInterval(gameInterval);
-        gameInterval = null;
+    restartBtn.addEventListener("click", () => {
+        if (gameInterval) {
+            clearInterval(gameInterval);
+            gameInterval = null;
+        }
+        initGame();
+    });
+
+    function attemptTurn({ dx, dy, axis }) {
+        if ((axis === "x" && velocity.x === 0) || (axis === "y" && velocity.y === 0)) {
+            velocity = { x: dx, y: dy };
+            if (!gameInterval && !isGameOver) {
+                isPaused = false;
+                startGameLoop();
+            }
+        }
     }
-    initGame(); // Spiel zurücksetzen
-});
-function attemptTurn({ dx, dy, axis }) {
-  /* Gegen Geradeaus wenden wir uns nur, wenn wir nicht schon auf derselben Achse unterwegs sind */
-  if ((axis === "x" && velocity.x === 0) || (axis === "y" && velocity.y === 0)) {
-    velocity = { x: dx, y: dy };
-    /* falls das Spiel noch nicht läuft → Loop starten */
-    if (!gameInterval && !isGameOver) {
-      isPaused = false;
-      startGameLoop();
-    }
-  }
-}
+
     let gridSize = 20; 
     let tileCountX, tileCountY;
 
@@ -77,7 +68,6 @@ function attemptTurn({ dx, dy, axis }) {
     currentScoreEl.textContent = score;
     highscoreEl.textContent = highscore;
 
-    // Helper function to get CSS variables
     function getCssVariable(variableName) {
         return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
     }
@@ -328,8 +318,9 @@ function attemptTurn({ dx, dy, axis }) {
         }
         resizeCanvas();
     });
+
     exitFullscreenBtn.addEventListener("click", () => {
-         if (document.fullscreenElement) {
+        if (document.fullscreenElement) {
             document.exitFullscreen();
         }
     });
@@ -359,14 +350,14 @@ function attemptTurn({ dx, dy, axis }) {
             gameLoop(); 
         }
     }
-    
+
     function togglePause() {
         if (isGameOver) return;
         if (isPaused) {
             resumeGame();
         } else {
             if (velocity.x !== 0 || velocity.y !== 0) { 
-                 pauseGame();
+                pauseGame();
             }
         }
     }
@@ -376,6 +367,4 @@ function attemptTurn({ dx, dy, axis }) {
 
     resizeCanvas();
     initGame();
-
 });
-
